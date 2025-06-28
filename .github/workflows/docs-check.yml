@@ -1,0 +1,110 @@
+name: Documentation Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout PR
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Check for unauthorized .md files
+      id: check_md_files
+      run: |
+        echo "📝 Checking documentation files..."
+        
+        # Get list of changed files in this PR
+        git diff --name-only origin/${{ github.base_ref }}...HEAD > changed_files.txt
+        
+        # Check for .md files that are NOT README.md or TODO.md
+        unauthorized_md_files=$(grep '\.md$' changed_files.txt | grep -v '^README\.md$' | grep -v '^TODO\.md$' || true)
+        
+        if [ -n "$unauthorized_md_files" ]; then
+          echo "❌ Documentation policy violation: Unauthorized .md files detected!"
+          echo "The following .md files are not allowed:"
+          echo "$unauthorized_md_files"
+          echo ""
+          echo "Only README.md and TODO.md are permitted"
+          echo ""
+          echo "Please remove these files from your PR:"
+          echo "$unauthorized_md_files" | sed 's/^/  - /'
+          echo ""
+          echo "unauthorized_files_found=true" >> $GITHUB_OUTPUT
+          echo "unauthorized_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$unauthorized_md_files" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        else
+          echo "✅ Documentation check passed: No unauthorized .md files found"
+          echo "unauthorized_files_found=false" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Block PR if policy violations found
+      if: steps.check_md_files.outputs.unauthorized_files_found == 'true'
+      run: |
+        echo "🚫 BLOCKING PULL REQUEST"
+        echo "This PR contains documentation policy violations and cannot be merged."
+        exit 1
+        
+    - name: Comment on PR with policy violation
+      if: failure() && steps.check_md_files.outputs.unauthorized_files_found == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const unauthorizedFiles = `${{ steps.check_md_files.outputs.unauthorized_files }}`;
+          const comment = `## 📝 Documentation Policy - PR Blocked
+          
+**This pull request contains files that don't follow our documentation policy.**
+
+### Files that need to be removed:
+\`\`\`
+${unauthorizedFiles}
+\`\`\`
+
+### Policy:
+- Only \`README.md\` and \`TODO.md\` are allowed
+- Other documentation files should not be included
+
+### To fix:
+1. Remove the files listed above
+2. Commit the changes
+3. Push to update this PR
+
+---
+*Automated documentation check*`;
+
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: comment
+          });
+
+  success-notification:
+    runs-on: ubuntu-latest
+    needs: security-check
+    if: success()
+    steps:
+    - name: Comment on successful documentation check
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const comment = `## ✅ Documentation Check Passed
+          
+**No policy violations detected in this PR.**
+
+All file changes comply with the documentation policy.
+
+---
+*Automated documentation check completed successfully.*`;
+
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: comment
+          }); 

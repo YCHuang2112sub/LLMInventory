@@ -1,0 +1,23 @@
+# Commands to upload LLMInventory to GitHub
+
+# 1. Initialize Git repository
+git init
+
+# 2. Add all files (except those in .gitignore)
+git add .
+
+# 3. Make your first commit
+git commit -m "Initial commit: Complete LLMInventory with 37 AI models from 5 providers"
+
+# 4. Add your GitHub repository as remote (replace with your actual repo URL)
+git remote add origin https://github.com/YOUR_USERNAME/LLMInventory.git
+
+# 5. Push to GitHub
+git push -u origin main
+
+# Alternative if main branch doesn't work:
+# git push -u origin master
+
+# If you need to create a new branch:
+# git branch -M main
+# git push -u origin main 

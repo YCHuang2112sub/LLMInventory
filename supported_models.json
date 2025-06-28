@@ -1,0 +1,1090 @@
+[
+  {
+    "provider": "openai",
+    "model": "gpt-4o",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "Most advanced GPT-4 model with multimodal capabilities",
+    "capabilities": [
+      "text",
+      "vision",
+      "audio"
+    ],
+    "context_window": 128000,
+    "max_output": 16384,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Nucleus sampling parameter"
+      }
+    },
+    "pricing": {
+      "input_cost_per_1m_tokens": 2.5,
+      "output_cost_per_1m_tokens": 10.0
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "Smaller, faster, cheaper GPT-4o model",
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "context_window": 128000,
+    "max_output": 16384,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Nucleus sampling parameter"
+      }
+    },
+    "pricing": {
+      "input_cost_per_1m_tokens": 0.15,
+      "output_cost_per_1m_tokens": 0.6
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "gpt-4-turbo",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "The latest GPT-4 Turbo model with vision capabilities. Vision requests have a separate rate limit. For both vision and text requests, the model supports a 128k context window.",
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "context_window": 128000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic."
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "The maximum number of tokens that can be generated in the chat completion."
+      }
+    },
+    "pricing": {
+      "input_cost_per_1m_tokens": 10.0,
+      "output_cost_per_1m_tokens": 30.0
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "o1",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "Advanced reasoning model with enhanced problem-solving capabilities",
+    "capabilities": [
+      "text",
+      "reasoning"
+    ],
+    "context_window": 200000,
+    "max_output": 100000,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    },
+    "pricing": {
+      "input_cost_per_1m_tokens": 15.0,
+      "output_cost_per_1m_tokens": 60.0
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "o1-mini",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "Smaller version of o1 reasoning model",
+    "capabilities": [
+      "text",
+      "reasoning"
+    ],
+    "context_window": 128000,
+    "max_output": 65536,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    },
+    "pricing": {
+      "input_cost_per_1m_tokens": 3.0,
+      "output_cost_per_1m_tokens": 12.0
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "o3-mini",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "Latest reasoning model with improved capabilities",
+    "capabilities": [
+      "text",
+      "reasoning"
+    ],
+    "context_window": 200000,
+    "max_output": 100000,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "gpt-4.1",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "GPT-4.1 with 1M+ context window",
+    "capabilities": [
+      "text"
+    ],
+    "context_window": 1000000,
+    "max_output": 32768,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "gpt-4.1-mini",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "description": "Smaller GPT-4.1 model with large context",
+    "capabilities": [
+      "text"
+    ],
+    "context_window": 1000000,
+    "max_output": 32768,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "openai",
+    "model": "dall-e-3",
+    "endpoint": "https://api.openai.com/v1/images/generations",
+    "description": "Advanced image generation model",
+    "capabilities": [
+      "image_generation"
+    ],
+    "required_fields": [
+      "prompt"
+    ],
+    "parameters": {
+      "size": {
+        "type": "string",
+        "default": "1024x1024",
+        "description": "Image size"
+      },
+      "quality": {
+        "type": "string",
+        "default": "standard",
+        "description": "Image quality"
+      }
+    },
+    "pricing": {
+      "cost_per_image": 0.04
+    }
+  },
+  {
+    "provider": "anthropic",
+    "model": "claude-4-opus",
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "description": "Most capable Claude 4 model with exceptional reasoning",
+    "capabilities": [
+      "text",
+      "reasoning",
+      "analysis"
+    ],
+    "context_window": 200000,
+    "max_output": 8192,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 0.99,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "anthropic",
+    "model": "claude-4-sonnet",
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "description": "Balanced Claude 4 model for general use",
+    "capabilities": [
+      "text",
+      "reasoning",
+      "analysis"
+    ],
+    "context_window": 200000,
+    "max_output": 8192,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 0.99,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "anthropic",
+    "model": "claude-3-7-sonnet",
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "description": "Claude 3.7 with extended thinking capabilities",
+    "capabilities": [
+      "text",
+      "reasoning",
+      "thinking"
+    ],
+    "context_window": 200000,
+    "max_output": 8192,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 0.99,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "anthropic",
+    "model": "claude-3-5-sonnet-20241022",
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "description": "Latest Claude 3.5 Sonnet with computer use capabilities",
+    "capabilities": [
+      "text",
+      "vision",
+      "computer_use"
+    ],
+    "context_window": 200000,
+    "max_output": 8192,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 0.99,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "anthropic",
+    "model": "claude-3-5-haiku-20241022",
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "description": "Fast and efficient Claude 3.5 Haiku",
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "context_window": 200000,
+    "max_output": 8192,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "max_tokens": {
+        "type": "integer",
+        "default": 1024,
+        "description": "Maximum tokens to generate"
+      },
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 0.99,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "anthropic",
+    "model": "claude-3-haiku-20240307",
+    "endpoint": "https://api.anthropic.com/v1/messages",
+    "description": "Anthropic's fastest model, designed for near-instant responsiveness and high throughput. Supports vision inputs.",
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "context_window": 200000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "max_tokens": {
+        "type": "integer",
+        "default": 1024,
+        "description": "The maximum number of tokens to generate in the response."
+      },
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in the generation. Values closer to 0.0 are more deterministic, while values closer to 1.0 introduce more randomness."
+      },
+      "top_p": {
+        "type": "float",
+        "default": 0.99,
+        "description": "Nucleus sampling parameter. The model considers tokens comprising the top_p probability mass."
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemini-2.0-flash-exp",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Latest experimental Gemini 2.0 Flash model",
+    "capabilities": [
+      "text",
+      "vision",
+      "audio",
+      "multimodal"
+    ],
+    "context_window": 1000000,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "topP": {
+        "type": "float",
+        "default": 0.95,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemini-1.5-pro",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Most capable Gemini model with 2M context",
+    "capabilities": [
+      "text",
+      "vision",
+      "audio",
+      "code"
+    ],
+    "context_window": 2000000,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "topP": {
+        "type": "float",
+        "default": 0.95,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemini-1.5-flash",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Fast and efficient Gemini model",
+    "capabilities": [
+      "text",
+      "vision",
+      "audio"
+    ],
+    "context_window": 1000000,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "topP": {
+        "type": "float",
+        "default": 0.95,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemini-1.5-flash-8b",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Smaller, faster Gemini Flash model",
+    "capabilities": [
+      "text",
+      "vision"
+    ],
+    "context_window": 1000000,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemini-1.0-pro",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Original Gemini Pro model",
+    "capabilities": [
+      "text"
+    ],
+    "context_window": 32000,
+    "max_output": 2048,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.9,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 2048,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemma-2-27b",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Large Gemma model for complex tasks",
+    "capabilities": [
+      "text",
+      "code"
+    ],
+    "context_window": 8192,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemma-2-9b",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Medium-sized Gemma model",
+    "capabilities": [
+      "text",
+      "code"
+    ],
+    "context_window": 8192,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "gemma-2-2b",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Compact Gemma model for lightweight tasks",
+    "capabilities": [
+      "text"
+    ],
+    "context_window": 8192,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 2048,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "learnlm-1.5-pro-experimental",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Experimental learning-focused model",
+    "capabilities": [
+      "text",
+      "education",
+      "tutoring"
+    ],
+    "context_window": 2000000,
+    "max_output": 8192,
+    "required_fields": [
+      "contents"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "maxOutputTokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "google",
+    "model": "text-embedding-004",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/models",
+    "description": "Latest text embedding model",
+    "capabilities": [
+      "embeddings"
+    ],
+    "context_window": 2048,
+    "required_fields": [
+      "input"
+    ],
+    "parameters": {
+      "dimensions": {
+        "type": "integer",
+        "default": 768,
+        "description": "Output embedding dimensions"
+      }
+    }
+  },
+  {
+    "provider": "xai",
+    "model": "grok-2",
+    "endpoint": "https://api.x.ai/v1/chat/completions",
+    "description": "Advanced Grok model with reasoning capabilities",
+    "capabilities": [
+      "text",
+      "reasoning",
+      "real_time_data"
+    ],
+    "context_window": 131072,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "xai",
+    "model": "grok-2-mini",
+    "endpoint": "https://api.x.ai/v1/chat/completions",
+    "description": "Smaller, faster version of Grok-2",
+    "capabilities": [
+      "text",
+      "reasoning"
+    ],
+    "context_window": 131072,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "xai",
+    "model": "grok-beta",
+    "endpoint": "https://api.x.ai/v1/chat/completions",
+    "description": "Beta version of next-generation Grok",
+    "capabilities": [
+      "text",
+      "reasoning",
+      "real_time_data"
+    ],
+    "context_window": 131072,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "mistral-large-2411",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Latest and most capable Mistral model",
+    "capabilities": [
+      "text",
+      "code",
+      "reasoning",
+      "function_calling"
+    ],
+    "context_window": 128000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.7,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      },
+      "top_p": {
+        "type": "float",
+        "default": 1.0,
+        "description": "Nucleus sampling parameter"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "mistral-large-2407",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Previous version of Mistral Large",
+    "capabilities": [
+      "text",
+      "code",
+      "reasoning",
+      "function_calling"
+    ],
+    "context_window": 128000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.7,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "mistral-small-2409",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Efficient model for everyday tasks",
+    "capabilities": [
+      "text",
+      "code"
+    ],
+    "context_window": 128000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.7,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "codestral-2405",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Specialized model for code generation and completion",
+    "capabilities": [
+      "code",
+      "text"
+    ],
+    "context_window": 32000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.1,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "codestral-mamba-2407",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Mamba-based code model with linear scaling",
+    "capabilities": [
+      "code",
+      "text"
+    ],
+    "context_window": 256000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.1,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "pixtral-12b-2409",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Multimodal model with vision capabilities",
+    "capabilities": [
+      "text",
+      "vision",
+      "multimodal"
+    ],
+    "context_window": 128000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.7,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "ministral-8b-2410",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Compact model for edge deployment",
+    "capabilities": [
+      "text",
+      "code"
+    ],
+    "context_window": 128000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.7,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "ministral-3b-2410",
+    "endpoint": "https://api.mistral.ai/v1/chat/completions",
+    "description": "Ultra-compact model for lightweight tasks",
+    "capabilities": [
+      "text"
+    ],
+    "context_window": 128000,
+    "max_output": 4096,
+    "required_fields": [
+      "messages"
+    ],
+    "parameters": {
+      "temperature": {
+        "type": "float",
+        "default": 0.7,
+        "description": "Controls randomness in generation"
+      },
+      "max_tokens": {
+        "type": "integer",
+        "default": 4096,
+        "description": "Maximum tokens to generate"
+      }
+    }
+  },
+  {
+    "provider": "mistral",
+    "model": "mistral-embed",
+    "endpoint": "https://api.mistral.ai/v1/embeddings",
+    "description": "Text embedding model for semantic search",
+    "capabilities": [
+      "embeddings"
+    ],
+    "context_window": 8192,
+    "required_fields": [
+      "input"
+    ],
+    "parameters": {
+      "encoding_format": {
+        "type": "string",
+        "default": "float",
+        "description": "Encoding format for embeddings"
+      }
+    }
+  }
+]

@@ -1,0 +1,19 @@
+# api_monitoring_config.yaml
+# Configuration for monitoring external LLM API documentation for updates.
+# This file lists the URLs that a separate script can periodically check for changes.
+
+providers:
+  openai:
+    docs_url: "https://platform.openai.com/docs/api-reference"
+    # You might add specific API endpoints to check for version changes if available,
+    # e.g., a /models endpoint that lists available models and their versions.
+  anthropic:
+    docs_url: "https://docs.anthropic.com/claude/reference/messages_api"
+  google:
+    docs_url: "https://ai.google.dev/docs/reference/rest"
+  mistral:
+    docs_url: "https://docs.mistral.ai/api-reference/"
+  cohere:
+    docs_url: "https://docs.cohere.com/reference/chat"
+  # Grok is not publicly available for general API use, so no URL for now.
+  # Add other providers here as needed.

@@ -1,0 +1,25 @@
+# Configuration for Anthropic's Claude 3 Haiku model (version 20240307)
+
+provider: "anthropic"
+model: "claude-3-haiku-20240307"
+
+endpoint: "https://api.anthropic.com/v1/messages"
+
+description: "Anthropic's fastest model, designed for near-instant responsiveness and high throughput. Supports vision inputs."
+
+required_fields:
+  - "messages"
+
+parameters:
+  max_tokens:
+    type: "integer"
+    default: 1024
+    description: "The maximum number of tokens to generate in the response."
+  temperature:
+    type: "float"
+    default: 0.7
+    description: "Controls randomness in the generation. Values closer to 0.0 are more deterministic, while values closer to 1.0 introduce more randomness."
+  top_p:
+    type: "float"
+    # Default omitted - let API use its default (0.99)
+    description: "Nucleus sampling parameter. The model considers tokens comprising the top_p probability mass."

@@ -1,0 +1,278 @@
+name: Todo Manager
+
+on:
+  issues:
+    types: [opened, edited, closed]
+  pull_request:
+    types: [opened, closed, merged]
+  workflow_dispatch:
+    inputs:
+      provider_name:
+        description: 'New LLM Provider to analyze'
+        required: false
+        type: string
+      api_docs_url:
+        description: 'API Documentation URL'
+        required: false
+        type: string
+
+jobs:
+  update-todo:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        pip install requests pyyaml anthropic
+        
+    - name: Update TODO from Issues and PRs
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          
+          // Get all open issues and PRs
+          const [issues, prs] = await Promise.all([
+            github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            }),
+            github.rest.pulls.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            })
+          ]);
+          
+          // Categorize items
+          const backlog = [];
+          const inProgress = [];
+          const review = [];
+          const done = [];
+          
+          // Process issues
+          issues.data.forEach(issue => {
+            if (issue.pull_request) return; // Skip PRs in issues list
+            
+            const item = `- [ ] ${issue.title} (#${issue.number})`;
+            const labels = issue.labels.map(l => l.name);
+            
+            if (labels.includes('in-progress')) {
+              inProgress.push(item);
+            } else if (labels.includes('needs-review')) {
+              review.push(item);
+            } else {
+              backlog.push(item);
+            }
+          });
+          
+          // Process PRs
+          prs.data.forEach(pr => {
+            const item = `- [ ] ${pr.title} (#${pr.number})`;
+            if (pr.draft) {
+              inProgress.push(item);
+            } else {
+              review.push(item + ' [PR]');
+            }
+          });
+          
+          // Generate TODO.md content
+          const todoContent = `# LLMInventory - To-Do List
+
+*Last updated: ${new Date().toISOString().split('T')[0]}*
+
+## 🆕 Backlog (${backlog.length} items)
+${backlog.length > 0 ? backlog.join('\n') : '- No items in backlog'}
+
+## 🔄 In Progress (${inProgress.length} items)  
+${inProgress.length > 0 ? inProgress.join('\n') : '- No items in progress'}
+
+## 👀 Review (${review.length} items)
+${review.length > 0 ? review.join('\n') : '- No items in review'}
+
+## 🎯 LLM Provider Support Status
+
+### ✅ Implemented Providers
+- [x] OpenAI (GPT-3.5, GPT-4, GPT-4-turbo)
+- [x] Anthropic (Claude-3-haiku, Claude-3-sonnet, Claude-3-opus)
+- [x] Google (Gemini models)
+- [x] Mistral (Mistral-7B, Mixtral-8x7B)
+- [x] xAI (Grok models)
+
+### 🔄 Providers In Development
+${context.payload.inputs?.provider_name ? `- [ ] ${context.payload.inputs.provider_name} (API analysis in progress)` : '- No providers currently being analyzed'}
+
+### 📋 Provider Analysis Queue
+- [ ] Cohere (Command, Embed models)
+- [ ] Hugging Face (Various open-source models)
+- [ ] Replicate (Community models)
+- [ ] Together AI (Open-source models)
+- [ ] Perplexity AI (PPLX models)
+- [ ] Meta (Llama models via API)
+
+## 📊 Development Metrics
+- **Total Issues**: ${issues.data.length}
+- **Total PRs**: ${prs.data.length}
+- **Completion Rate**: ${Math.round((done.length / (backlog.length + inProgress.length + review.length + done.length)) * 100) || 0}%
+
+---
+*This file is automatically updated by GitHub Actions*`;
+
+          // Write TODO.md
+          fs.writeFileSync('TODO.md', todoContent);
+          
+          console.log('TODO.md updated successfully');
+
+    - name: Analyze New Provider with Claude
+      if: ${{ github.event.inputs.provider_name }}
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: |
+        python << 'EOF'
+        import os
+        import json
+        import requests
+        from anthropic import Anthropic
+
+        provider_name = "${{ github.event.inputs.provider_name }}"
+        api_docs_url = "${{ github.event.inputs.api_docs_url }}"
+        
+        if not os.getenv('ANTHROPIC_API_KEY'):
+            print("Warning: ANTHROPIC_API_KEY not set, skipping API analysis")
+            exit(0)
+            
+        client = Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
+        
+        # Read existing adapter files for comparison
+        adapter_files = []
+        try:
+            import glob
+            for file_path in glob.glob('src/llminventory/adapters/*.py'):
+                with open(file_path, 'r') as f:
+                    adapter_files.append({
+                        'name': file_path,
+                        'content': f.read()[:2000]  # First 2000 chars
+                    })
+        except Exception as e:
+            print(f"Error reading adapter files: {e}")
+        
+        # Prepare prompt for Claude
+        prompt = f"""
+        I need to analyze the API for {provider_name} and create an adapter for our LLM inventory system.
+        
+        API Documentation URL: {api_docs_url if api_docs_url else 'Not provided'}
+        
+        Here are examples of our existing adapters:
+        {json.dumps(adapter_files[:2], indent=2)}
+        
+        Please analyze and provide:
+        1. **API Compatibility Assessment**: Can this provider be integrated?
+        2. **Required Dependencies**: What packages need to be installed?
+        3. **Authentication Method**: How does API authentication work?
+        4. **Model List**: What models are available?
+        5. **API Endpoints**: Key endpoints for chat/completion
+        6. **Rate Limits**: Any known limitations
+        7. **Implementation Complexity**: Scale 1-10, with reasoning
+        8. **Adapter Code Structure**: Basic structure following our pattern
+        
+        Format your response as structured markdown that can be used in our TODO list.
+        """
+        
+        try:
+            response = client.messages.create(
+                model="claude-3-sonnet-20240229",
+                max_tokens=4000,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            
+            analysis = response.content[0].text
+            
+            # Save analysis to file
+            with open(f'analysis_{provider_name.lower().replace(" ", "_")}.md', 'w') as f:
+                f.write(f"# {provider_name} API Analysis\n\n")
+                f.write(f"*Generated on: {__import__('datetime').datetime.now().isoformat()}*\n\n")
+                f.write(analysis)
+                
+            print(f"Analysis saved for {provider_name}")
+            print("=" * 50)
+            print(analysis[:500] + "..." if len(analysis) > 500 else analysis)
+            
+        except Exception as e:
+            print(f"Error analyzing {provider_name}: {e}")
+            
+        EOF
+
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add TODO.md
+        git add analysis_*.md 2>/dev/null || true
+        
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "🤖 Auto-update TODO.md and provider analysis"
+          git push
+        fi
+
+  create-provider-issue:
+    if: ${{ github.event.inputs.provider_name }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create Provider Integration Issue
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const providerName = '${{ github.event.inputs.provider_name }}';
+          const apiDocsUrl = '${{ github.event.inputs.api_docs_url }}';
+          
+          const issueBody = `## 🎯 New LLM Provider Integration Request
+
+**Provider**: ${providerName}
+**API Documentation**: ${apiDocsUrl || 'To be provided'}
+
+### 📋 Integration Checklist
+- [ ] API analysis completed (automated)
+- [ ] Dependencies identified
+- [ ] Authentication method documented
+- [ ] Base adapter implementation
+- [ ] Model configuration files
+- [ ] Unit tests created
+- [ ] Integration tests added
+- [ ] Documentation updated
+- [ ] Example usage created
+
+### 🔄 Next Steps
+1. Wait for automated API analysis
+2. Review Claude's assessment
+3. Create implementation plan
+4. Begin development
+
+### 📊 Estimated Effort
+- **Complexity**: TBD (will be assessed by Claude)
+- **Timeline**: TBD
+- **Dependencies**: TBD
+
+---
+*This issue was automatically created by the Todo Manager workflow*`;
+
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `Add ${providerName} LLM Provider Support`,
+            body: issueBody,
+            labels: ['enhancement', 'provider-integration', 'needs-analysis']
+          }); 
