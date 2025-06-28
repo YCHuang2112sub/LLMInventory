@@ -7,6 +7,10 @@ secrets.yaml
 *.md
 !README.md
 !TODO.md
+!MODELS.md
+
+# Private documentation
+docs/private/
 
 # Python
 __pycache__/
