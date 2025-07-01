@@ -1,0 +1,6 @@
+{
+  "gemini-1.5-pro": {
+    "status": "\u274c Failed",
+    "error": "Google API request failed: 429 Client Error: Too Many Requests for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyBH6tES8pjryqXPG-JZLm8eM-ue29P3XsE"
+  }
+}

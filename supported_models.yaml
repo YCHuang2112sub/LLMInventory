@@ -82,72 +82,6 @@
     input_cost_per_1m_tokens: 10.0
     output_cost_per_1m_tokens: 30.0
 - provider: openai
-  model: o1
-  endpoint: https://api.openai.com/v1/chat/completions
-  description: Advanced reasoning model with enhanced problem-solving capabilities
-  capabilities:
-  - text
-  - reasoning
-  context_window: 200000
-  max_output: 100000
-  required_fields:
-  - messages
-  parameters:
-    temperature:
-      type: float
-      default: 1.0
-      description: Controls randomness in generation
-    max_tokens:
-      type: integer
-      default: 4096
-      description: Maximum tokens to generate
-  pricing:
-    input_cost_per_1m_tokens: 15.0
-    output_cost_per_1m_tokens: 60.0
-- provider: openai
-  model: o1-mini
-  endpoint: https://api.openai.com/v1/chat/completions
-  description: Smaller version of o1 reasoning model
-  capabilities:
-  - text
-  - reasoning
-  context_window: 128000
-  max_output: 65536
-  required_fields:
-  - messages
-  parameters:
-    temperature:
-      type: float
-      default: 1.0
-      description: Controls randomness in generation
-    max_tokens:
-      type: integer
-      default: 4096
-      description: Maximum tokens to generate
-  pricing:
-    input_cost_per_1m_tokens: 3.0
-    output_cost_per_1m_tokens: 12.0
-- provider: openai
-  model: o3-mini
-  endpoint: https://api.openai.com/v1/chat/completions
-  description: Latest reasoning model with improved capabilities
-  capabilities:
-  - text
-  - reasoning
-  context_window: 200000
-  max_output: 100000
-  required_fields:
-  - messages
-  parameters:
-    temperature:
-      type: float
-      default: 1.0
-      description: Controls randomness in generation
-    max_tokens:
-      type: integer
-      default: 4096
-      description: Maximum tokens to generate
-- provider: openai
   model: gpt-4.1
   endpoint: https://api.openai.com/v1/chat/completions
   description: GPT-4.1 with 1M+ context window
@@ -191,6 +125,8 @@
   description: Advanced image generation model
   capabilities:
   - image_generation
+  context_window: 4000
+  max_output: 1
   required_fields:
   - prompt
   parameters:
@@ -203,82 +139,8 @@
       default: standard
       description: Image quality
   pricing:
-    cost_per_image: 0.04
-- provider: anthropic
-  model: claude-4-opus
-  endpoint: https://api.anthropic.com/v1/messages
-  description: Most capable Claude 4 model with exceptional reasoning
-  capabilities:
-  - text
-  - reasoning
-  - analysis
-  context_window: 200000
-  max_output: 8192
-  required_fields:
-  - messages
-  parameters:
-    max_tokens:
-      type: integer
-      default: 4096
-      description: Maximum tokens to generate
-    temperature:
-      type: float
-      default: 1.0
-      description: Controls randomness in generation
-    top_p:
-      type: float
-      default: 0.99
-      description: Nucleus sampling parameter
-- provider: anthropic
-  model: claude-4-sonnet
-  endpoint: https://api.anthropic.com/v1/messages
-  description: Balanced Claude 4 model for general use
-  capabilities:
-  - text
-  - reasoning
-  - analysis
-  context_window: 200000
-  max_output: 8192
-  required_fields:
-  - messages
-  parameters:
-    max_tokens:
-      type: integer
-      default: 4096
-      description: Maximum tokens to generate
-    temperature:
-      type: float
-      default: 1.0
-      description: Controls randomness in generation
-    top_p:
-      type: float
-      default: 0.99
-      description: Nucleus sampling parameter
-- provider: anthropic
-  model: claude-3-7-sonnet
-  endpoint: https://api.anthropic.com/v1/messages
-  description: Claude 3.7 with extended thinking capabilities
-  capabilities:
-  - text
-  - reasoning
-  - thinking
-  context_window: 200000
-  max_output: 8192
-  required_fields:
-  - messages
-  parameters:
-    max_tokens:
-      type: integer
-      default: 4096
-      description: Maximum tokens to generate
-    temperature:
-      type: float
-      default: 1.0
-      description: Controls randomness in generation
-    top_p:
-      type: float
-      default: 0.99
-      description: Nucleus sampling parameter
+    input_cost_per_1m_tokens: 0.0
+    output_cost_per_1m_tokens: 40.0
 - provider: anthropic
   model: claude-3-5-sonnet-20241022
   endpoint: https://api.anthropic.com/v1/messages
@@ -453,32 +315,63 @@
       default: 4096
       description: Maximum tokens to generate
 - provider: google
-  model: gemini-1.0-pro
+  model: gemini-1.5-flash-latest
   endpoint: https://generativelanguage.googleapis.com/v1beta/models
-  description: Original Gemini Pro model
+  description: Latest stable Gemini 1.5 Flash model
   capabilities:
   - text
-  context_window: 32000
-  max_output: 2048
+  - vision
+  - audio
+  context_window: 1000000
+  max_output: 8192
   required_fields:
   - contents
   parameters:
     temperature:
       type: float
-      default: 0.9
+      default: 1.0
       description: Controls randomness in generation
     maxOutputTokens:
       type: integer
-      default: 2048
+      default: 4096
       description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
 - provider: google
-  model: gemma-2-27b
+  model: gemini-1.5-flash-002
   endpoint: https://generativelanguage.googleapis.com/v1beta/models
-  description: Large Gemma model for complex tasks
+  description: Gemini 1.5 Flash version 002
   capabilities:
   - text
-  - code
-  context_window: 8192
+  - vision
+  - audio
+  context_window: 1000000
+  max_output: 8192
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-1.5-flash-8b-001
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Gemini 1.5 Flash 8B version 001
+  capabilities:
+  - text
+  - vision
+  context_window: 1000000
   max_output: 8192
   required_fields:
   - contents
@@ -492,13 +385,13 @@
       default: 4096
       description: Maximum tokens to generate
 - provider: google
-  model: gemma-2-9b
+  model: gemini-1.5-flash-8b-latest
   endpoint: https://generativelanguage.googleapis.com/v1beta/models
-  description: Medium-sized Gemma model
+  description: Latest Gemini 1.5 Flash 8B model
   capabilities:
   - text
-  - code
-  context_window: 8192
+  - vision
+  context_window: 1000000
   max_output: 8192
   required_fields:
   - contents
@@ -512,13 +405,16 @@
       default: 4096
       description: Maximum tokens to generate
 - provider: google
-  model: gemma-2-2b
+  model: gemini-2.5-flash
   endpoint: https://generativelanguage.googleapis.com/v1beta/models
-  description: Compact Gemma model for lightweight tasks
+  description: Latest Gemini 2.5 Flash model with enhanced capabilities
   capabilities:
   - text
-  context_window: 8192
-  max_output: 8192
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 65536
   required_fields:
   - contents
   parameters:
@@ -528,17 +424,74 @@
       description: Controls randomness in generation
     maxOutputTokens:
       type: integer
-      default: 2048
+      default: 4096
       description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
 - provider: google
-  model: learnlm-1.5-pro-experimental
+  model: gemini-2.5-flash-preview-05-20
   endpoint: https://generativelanguage.googleapis.com/v1beta/models
-  description: Experimental learning-focused model
+  description: Preview version of Gemini 2.5 Flash
   capabilities:
   - text
-  - education
-  - tutoring
-  context_window: 2000000
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 65536
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.5-flash-lite-preview-06-17
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Lightweight version of Gemini 2.5 Flash for high throughput
+  capabilities:
+  - text
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 65536
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.0-flash
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Stable Gemini 2.0 Flash model
+  capabilities:
+  - text
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
   max_output: 8192
   required_fields:
   - contents
@@ -551,6 +504,167 @@
       type: integer
       default: 4096
       description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.0-flash-001
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Gemini 2.0 Flash version 001
+  capabilities:
+  - text
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 8192
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.0-flash-exp-image-generation
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Experimental Gemini 2.0 Flash with image generation capabilities
+  capabilities:
+  - text
+  - vision
+  - audio
+  - image_generation
+  - multimodal
+  context_window: 1048576
+  max_output: 8192
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.0-flash-lite
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Lightweight Gemini 2.0 Flash for cost efficiency
+  capabilities:
+  - text
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 8192
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.0-flash-lite-001
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Gemini 2.0 Flash Lite version 001
+  capabilities:
+  - text
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 8192
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.0-flash-lite-preview-02-05
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Preview version of Gemini 2.0 Flash Lite
+  capabilities:
+  - text
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 8192
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
+- provider: google
+  model: gemini-2.0-flash-lite-preview
+  endpoint: https://generativelanguage.googleapis.com/v1beta/models
+  description: Latest preview of Gemini 2.0 Flash Lite
+  capabilities:
+  - text
+  - vision
+  - audio
+  - multimodal
+  context_window: 1048576
+  max_output: 8192
+  required_fields:
+  - contents
+  parameters:
+    temperature:
+      type: float
+      default: 1.0
+      description: Controls randomness in generation
+    maxOutputTokens:
+      type: integer
+      default: 4096
+      description: Maximum tokens to generate
+    topP:
+      type: float
+      default: 0.95
+      description: Nucleus sampling parameter
 - provider: google
   model: text-embedding-004
   endpoint: https://generativelanguage.googleapis.com/v1beta/models

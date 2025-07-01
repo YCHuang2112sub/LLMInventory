@@ -1,0 +1,53 @@
+{
+  "timestamp": "1751127526.4831707",
+  "total_models": 40,
+  "issues": [],
+  "warnings": [
+    "openai/dall-e-3: Incomplete pricing information"
+  ],
+  "statistics": {
+    "by_provider": {
+      "openai": 6,
+      "anthropic": 3,
+      "google": 19,
+      "xai": 3,
+      "mistral": 9
+    },
+    "by_capability": {
+      "text": 37,
+      "vision": 25,
+      "audio": 16,
+      "image_generation": 2,
+      "computer_use": 1,
+      "multimodal": 12,
+      "code": 7,
+      "embeddings": 2,
+      "reasoning": 5,
+      "real_time_data": 2,
+      "function_calling": 2
+    },
+    "total_context_window": 23933216,
+    "models_with_pricing": 4,
+    "models_with_capabilities": 40
+  },
+  "provider_breakdown": {
+    "openai": 6,
+    "anthropic": 3,
+    "google": 19,
+    "xai": 3,
+    "mistral": 9
+  },
+  "capability_breakdown": {
+    "text": 37,
+    "vision": 25,
+    "audio": 16,
+    "image_generation": 2,
+    "computer_use": 1,
+    "multimodal": 12,
+    "code": 7,
+    "embeddings": 2,
+    "reasoning": 5,
+    "real_time_data": 2,
+    "function_calling": 2
+  }
+}

@@ -7,13 +7,14 @@ from .base_adapter import BaseAdapter
 class AnthropicAdapter(BaseAdapter):
     """Adapter for making requests to the Anthropic API."""
 
-    def invoke(self, model_config: Dict[str, Any], payload: Dict[str, Any]) -> Dict[str, Any]:
+    def invoke(self, model_config: Dict[str, Any], payload: Dict[str, Any], parameters: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Sends a request to the Anthropic API messages endpoint.
 
         Args:
             model_config: The configuration for the Anthropic model.
-            payload: The request payload, containing 'messages' and other parameters.
+            payload: The request payload, containing 'messages'.
+            parameters: Optional parameters for the request (temperature, max_tokens, etc.).
 
         Returns:
             The JSON response from the API.
@@ -30,7 +31,6 @@ class AnthropicAdapter(BaseAdapter):
 
         # Adapt the payload to Anthropic's expected format
         # Anthropic expects "system" and "messages" (list of user/assistant turns)
-        #  We are simplifying and assuming only user messages for now.
         anthropic_messages: List[Dict[str, Any]] = []
         for message in payload.get("messages", []):
             role = message.get("role")
@@ -46,6 +46,10 @@ class AnthropicAdapter(BaseAdapter):
             "messages": anthropic_messages,
             **{k: v for k, v in payload.items() if k != "messages"}  # Add other params except original messages
         }
+        
+        # Add parameters if provided
+        if parameters:
+            request_body.update(parameters)
 
         try:
             response = requests.post(endpoint, headers=headers, json=request_body, timeout=60)

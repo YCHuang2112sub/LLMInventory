@@ -20,13 +20,14 @@ class XaiAdapter(BaseAdapter):
         super().__init__(api_key)
         self.base_url = "https://api.x.ai/v1"
 
-    def invoke(self, model_config: Dict[str, Any], payload: Dict[str, Any]) -> Dict[str, Any]:
+    def invoke(self, model_config: Dict[str, Any], payload: Dict[str, Any], parameters: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Send a request to xAI Grok API.
         
         Args:
             model_config: Configuration for the model.
             payload: Request payload.
+            parameters: Optional parameters for the request (temperature, max_tokens, etc.).
             
         Returns:
             Response from xAI API.
@@ -38,6 +39,10 @@ class XaiAdapter(BaseAdapter):
             "model": model_config['model'],
             **payload
         }
+        
+        # Add parameters if provided
+        if parameters:
+            xai_payload.update(parameters)
         
         headers = {
             "Content-Type": "application/json",

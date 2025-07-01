@@ -1,0 +1,14 @@
+{
+  "claude-3-5-haiku-20241022": {
+    "status": "\u2705 Success",
+    "response_time": "1.08s",
+    "response": "Hello! I'm Claude, an AI created by Anthropic. It's nice to meet you.",
+    "usage": {
+      "input_tokens": 23,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "output_tokens": 24,
+      "service_tier": "standard"
+    }
+  }
+}

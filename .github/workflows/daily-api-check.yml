@@ -1,0 +1,187 @@
+name: Daily API Updates Check
+
+on:
+  schedule:
+    # Run daily at 6:00 AM UTC (adjust timezone as needed)
+    - cron: '0 6 * * *'
+  workflow_dispatch:  # Allow manual triggering
+
+env:
+  PYTHON_VERSION: '3.9'
+
+jobs:
+  check-api-updates:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Create secrets file
+      run: |
+        cat > secrets.yaml << EOF
+        openai:
+          api_key: "${{ secrets.OPENAI_API_KEY }}"
+        anthropic:
+          api_key: "${{ secrets.ANTHROPIC_API_KEY }}"
+        google:
+          api_key: "${{ secrets.GOOGLE_API_KEY }}"
+        xai:
+          api_key: "${{ secrets.XAI_API_KEY }}"
+        mistral:
+          api_key: "${{ secrets.MISTRAL_API_KEY }}"
+        EOF
+        
+    - name: Run API updates check
+      id: api_check
+      run: |
+        python scripts/daily_api_check.py > api_check_results.txt 2>&1
+        echo "check_completed=true" >> $GITHUB_OUTPUT
+        
+    - name: Check for changes
+      id: changes
+      run: |
+        if [ -f "api_updates_found.json" ]; then
+          echo "updates_found=true" >> $GITHUB_OUTPUT
+          echo "Updates found, will create issue"
+        else
+          echo "updates_found=false" >> $GITHUB_OUTPUT
+          echo "No updates found"
+        fi
+        
+    - name: Create issue for API updates
+      if: steps.changes.outputs.updates_found == 'true'
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          
+          // Read the updates file
+          const updates = JSON.parse(fs.readFileSync('api_updates_found.json', 'utf8'));
+          const results = fs.readFileSync('api_check_results.txt', 'utf8');
+          
+          // Create issue body
+          let issueBody = `# 🚨 Daily API Updates Detected\n\n`;
+          issueBody += `**Date**: ${new Date().toISOString().split('T')[0]}\n\n`;
+          
+          if (updates.new_models && updates.new_models.length > 0) {
+            issueBody += `## 🆕 New Models Found\n\n`;
+            updates.new_models.forEach(model => {
+              issueBody += `- **${model.provider}/${model.model}**: ${model.description}\n`;
+            });
+            issueBody += `\n`;
+          }
+          
+          if (updates.deprecated_models && updates.deprecated_models.length > 0) {
+            issueBody += `## ⚠️ Deprecated Models\n\n`;
+            updates.deprecated_models.forEach(model => {
+              issueBody += `- **${model.provider}/${model.model}**: ${model.reason}\n`;
+            });
+            issueBody += `\n`;
+          }
+          
+          if (updates.pricing_changes && updates.pricing_changes.length > 0) {
+            issueBody += `## 💰 Pricing Changes\n\n`;
+            updates.pricing_changes.forEach(change => {
+              issueBody += `- **${change.provider}/${change.model}**: ${change.old_price} → ${change.new_price}\n`;
+            });
+            issueBody += `\n`;
+          }
+          
+          if (updates.capability_changes && updates.capability_changes.length > 0) {
+            issueBody += `## 🔧 Capability Changes\n\n`;
+            updates.capability_changes.forEach(change => {
+              issueBody += `- **${change.provider}/${change.model}**: ${change.description}\n`;
+            });
+            issueBody += `\n`;
+          }
+          
+          issueBody += `## 📋 Full Check Results\n\n`;
+          issueBody += `<details>\n<summary>Click to expand detailed results</summary>\n\n`;
+          issueBody += `\`\`\`\n${results}\n\`\`\`\n\n`;
+          issueBody += `</details>\n\n`;
+          
+          issueBody += `## 🎯 Recommended Actions\n\n`;
+          issueBody += `- [ ] Review new models for addition to supported_models.yaml\n`;
+          issueBody += `- [ ] Test deprecated models and update documentation\n`;
+          issueBody += `- [ ] Update pricing information in configurations\n`;
+          issueBody += `- [ ] Test capability changes and update model specs\n`;
+          issueBody += `- [ ] Update documentation (README.md, MODELS.md)\n\n`;
+          
+          issueBody += `---\n`;
+          issueBody += `*This issue was automatically created by the Daily API Check workflow.*\n`;
+          issueBody += `*Next check: ${new Date(Date.now() + 24*60*60*1000).toISOString().split('T')[0]}*`;
+          
+          // Create the issue
+          const issue = await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `🚨 API Updates Detected - ${new Date().toISOString().split('T')[0]}`,
+            body: issueBody,
+            labels: ['api-updates', 'automated', 'needs-review']
+          });
+          
+          console.log(`Created issue #${issue.data.number}: ${issue.data.title}`);
+          
+    - name: Post summary comment
+      if: always()
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          const results = fs.readFileSync('api_check_results.txt', 'utf8');
+          
+          // Find the latest commit
+          const commits = await github.rest.repos.listCommits({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            per_page: 1
+          });
+          
+          if (commits.data.length > 0) {
+            const latestCommit = commits.data[0];
+            
+            let commentBody = `## 🤖 Daily API Check Summary\n\n`;
+            commentBody += `**Date**: ${new Date().toISOString().split('T')[0]}\n`;
+            commentBody += `**Status**: ${{ steps.changes.outputs.updates_found == 'true' && '🚨 Updates Found' || '✅ No Updates' }}\n\n`;
+            
+            if ('${{ steps.changes.outputs.updates_found }}' === 'true') {
+              commentBody += `New issue created with detailed findings.\n\n`;
+            } else {
+              commentBody += `All APIs are stable, no changes detected.\n\n`;
+            }
+            
+            commentBody += `<details>\n<summary>View full check log</summary>\n\n`;
+            commentBody += `\`\`\`\n${results.substring(0, 5000)}\n\`\`\`\n\n`;
+            commentBody += `</details>\n\n`;
+            commentBody += `*Next check: ${new Date(Date.now() + 24*60*60*1000).toISOString().split('T')[0]}*`;
+            
+            await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: latestCommit.sha,
+              body: commentBody
+            });
+          }
+          
+    - name: Upload artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: api-check-results-${{ github.run_number }}
+        path: |
+          api_check_results.txt
+          api_updates_found.json
+        retention-days: 30 

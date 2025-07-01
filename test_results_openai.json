@@ -1,0 +1,46 @@
+{
+  "dall-e-3": {
+    "status": "\u274c Failed",
+    "error": "Missing required field in payload: 'prompt'"
+  },
+  "gpt-4-turbo": {
+    "status": "\u2705 Success",
+    "response_time": "3.33s",
+    "response": "Hello! I'm Assistant, powered by OpenAI's language model. How can I assist you today?",
+    "usage": {
+      "prompt_tokens": 23,
+      "completion_tokens": 21,
+      "total_tokens": 44,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  },
+  "gpt-4.1": {
+    "status": "\u2705 Success",
+    "response_time": "1.04s",
+    "response": "Hello! I'm ChatGPT, based on the GPT-4 architecture. How can I help you today?",
+    "usage": {
+      "prompt_tokens": 23,
+      "completion_tokens": 21,
+      "total_tokens": 44,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,445 @@
+{
+  "summary": {
+    "openai": {
+      "total": 6,
+      "successful": 5,
+      "success_rate": 83.33333333333334
+    },
+    "anthropic": {
+      "total": 3,
+      "successful": 3,
+      "success_rate": 100.0
+    },
+    "google": {
+      "total": 19,
+      "successful": 18,
+      "success_rate": 94.73684210526315
+    },
+    "xai": {
+      "total": 3,
+      "successful": 0,
+      "success_rate": 0.0
+    },
+    "mistral": {
+      "total": 9,
+      "successful": 0,
+      "success_rate": 0.0
+    }
+  },
+  "detailed": {
+    "openai": {
+      "gpt-4o": {
+        "status": "success",
+        "response_time": 1.15,
+        "response": "Hello! How can I assist you today?",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio"
+        ],
+        "context_window": 128000,
+        "max_output": 16384
+      },
+      "gpt-4o-mini": {
+        "status": "success",
+        "response_time": 1.95,
+        "response": "Hello! How can I assist you today?",
+        "capabilities": [
+          "text",
+          "vision"
+        ],
+        "context_window": 128000,
+        "max_output": 16384
+      },
+      "gpt-4-turbo": {
+        "status": "success",
+        "response_time": 1.35,
+        "response": "Hello! How can I assist you today?",
+        "capabilities": [
+          "text",
+          "vision"
+        ],
+        "context_window": 128000,
+        "max_output": 4096
+      },
+      "gpt-4.1": {
+        "status": "success",
+        "response_time": 0.79,
+        "response": "Hello! How can I help you today?",
+        "capabilities": [
+          "text"
+        ],
+        "context_window": 1000000,
+        "max_output": 32768
+      },
+      "gpt-4.1-mini": {
+        "status": "success",
+        "response_time": 1.25,
+        "response": "Hello! How can I assist you today?",
+        "capabilities": [
+          "text"
+        ],
+        "context_window": 1000000,
+        "max_output": 32768
+      },
+      "dall-e-3": {
+        "status": "failed",
+        "error": "Missing required field in payload: 'prompt'",
+        "response_time": 0
+      }
+    },
+    "anthropic": {
+      "claude-3-5-sonnet-20241022": {
+        "status": "success",
+        "response_time": 2.77,
+        "response": "Hi there! How can I help you today?",
+        "capabilities": [
+          "text",
+          "vision",
+          "computer_use"
+        ],
+        "context_window": 200000,
+        "max_output": 8192
+      },
+      "claude-3-5-haiku-20241022": {
+        "status": "success",
+        "response_time": 1.68,
+        "response": "Hello there! How are you doing today?",
+        "capabilities": [
+          "text",
+          "vision"
+        ],
+        "context_window": 200000,
+        "max_output": 8192
+      },
+      "claude-3-haiku-20240307": {
+        "status": "success",
+        "response_time": 0.93,
+        "response": "Hello!",
+        "capabilities": [
+          "text",
+          "vision"
+        ],
+        "context_window": 200000,
+        "max_output": 4096
+      }
+    },
+    "google": {
+      "gemini-2.0-flash-exp": {
+        "status": "success",
+        "response_time": 9.54,
+        "response": "Hello! How can I help you today?\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1000000,
+        "max_output": 8192
+      },
+      "gemini-1.5-pro": {
+        "status": "failed",
+        "error": "Google API request failed: 429 Client Error: Too Many Requests for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyBH6tES8pjryqXPG-JZLm8eM-ue29P3XsE",
+        "response_time": 0
+      },
+      "gemini-1.5-flash": {
+        "status": "success",
+        "response_time": 0.96,
+        "response": "Hello there!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio"
+        ],
+        "context_window": 1000000,
+        "max_output": 8192
+      },
+      "gemini-1.5-flash-8b": {
+        "status": "success",
+        "response_time": 0.94,
+        "response": "Hello!\n",
+        "capabilities": [
+          "text",
+          "vision"
+        ],
+        "context_window": 1000000,
+        "max_output": 8192
+      },
+      "gemini-1.5-flash-latest": {
+        "status": "success",
+        "response_time": 0.84,
+        "response": "Hello there!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio"
+        ],
+        "context_window": 1000000,
+        "max_output": 8192
+      },
+      "gemini-1.5-flash-002": {
+        "status": "success",
+        "response_time": 0.73,
+        "response": "Hello there!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio"
+        ],
+        "context_window": 1000000,
+        "max_output": 8192
+      },
+      "gemini-1.5-flash-8b-001": {
+        "status": "success",
+        "response_time": 0.81,
+        "response": "Hello!\n",
+        "capabilities": [
+          "text",
+          "vision"
+        ],
+        "context_window": 1000000,
+        "max_output": 8192
+      },
+      "gemini-1.5-flash-8b-latest": {
+        "status": "success",
+        "response_time": 0.68,
+        "response": "Hello!\n",
+        "capabilities": [
+          "text",
+          "vision"
+        ],
+        "context_window": 1000000,
+        "max_output": 8192
+      },
+      "gemini-2.5-flash": {
+        "status": "success",
+        "response_time": 6.27,
+        "response": "Hello!",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 65536
+      },
+      "gemini-2.5-flash-preview-05-20": {
+        "status": "success",
+        "response_time": 1.04,
+        "response": "Hello!",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 65536
+      },
+      "gemini-2.5-flash-lite-preview-06-17": {
+        "status": "success",
+        "response_time": 0.64,
+        "response": "Hello there!",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 65536
+      },
+      "gemini-2.0-flash": {
+        "status": "success",
+        "response_time": 1.05,
+        "response": "Hi there! How can I help you today?\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 8192
+      },
+      "gemini-2.0-flash-001": {
+        "status": "success",
+        "response_time": 1.06,
+        "response": "Hi there!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 8192
+      },
+      "gemini-2.0-flash-exp-image-generation": {
+        "status": "success",
+        "response_time": 0.83,
+        "response": "Hi there! How can I help you today?\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "image_generation",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 8192
+      },
+      "gemini-2.0-flash-lite": {
+        "status": "success",
+        "response_time": 1.25,
+        "response": "Hello!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 8192
+      },
+      "gemini-2.0-flash-lite-001": {
+        "status": "success",
+        "response_time": 0.74,
+        "response": "Hello there!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 8192
+      },
+      "gemini-2.0-flash-lite-preview-02-05": {
+        "status": "success",
+        "response_time": 0.73,
+        "response": "Hello there!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 8192
+      },
+      "gemini-2.0-flash-lite-preview": {
+        "status": "success",
+        "response_time": 0.84,
+        "response": "Hello there!\n",
+        "capabilities": [
+          "text",
+          "vision",
+          "audio",
+          "multimodal"
+        ],
+        "context_window": 1048576,
+        "max_output": 8192
+      },
+      "text-embedding-004": {
+        "status": "success",
+        "response_time": 0.72,
+        "response": "Embedding with 768 dimensions",
+        "capabilities": [
+          "embeddings"
+        ],
+        "context_window": 2048,
+        "max_output": "N/A"
+      }
+    },
+    "xai": {
+      "grok-2": {
+        "status": "failed",
+        "error": "\"API key for provider 'xai' not found in secrets.\"",
+        "response_time": 0
+      },
+      "grok-2-mini": {
+        "status": "failed",
+        "error": "\"API key for provider 'xai' not found in secrets.\"",
+        "response_time": 0
+      },
+      "grok-beta": {
+        "status": "failed",
+        "error": "\"API key for provider 'xai' not found in secrets.\"",
+        "response_time": 0
+      }
+    },
+    "mistral": {
+      "mistral-large-2411": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "mistral-large-2407": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "mistral-small-2409": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "codestral-2405": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "codestral-mamba-2407": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "pixtral-12b-2409": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "ministral-8b-2410": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "ministral-3b-2410": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      },
+      "mistral-embed": {
+        "status": "failed",
+        "error": "\"API key for provider 'mistral' not found in secrets.\"",
+        "response_time": 0
+      }
+    }
+  },
+  "issues": [
+    "openai/dall-e-3: Missing required field in payload: 'prompt'",
+    "google/gemini-1.5-pro: Google API request failed: 429 Client Error: Too Many Requests for url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyBH6tES8pjryqXPG-JZLm8eM-ue29P3XsE",
+    "xai/grok-2: \"API key for provider 'xai' not found in secrets.\"",
+    "xai/grok-2-mini: \"API key for provider 'xai' not found in secrets.\"",
+    "xai/grok-beta: \"API key for provider 'xai' not found in secrets.\"",
+    "mistral/mistral-large-2411: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/mistral-large-2407: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/mistral-small-2409: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/codestral-2405: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/codestral-mamba-2407: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/pixtral-12b-2409: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/ministral-8b-2410: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/ministral-3b-2410: \"API key for provider 'mistral' not found in secrets.\"",
+    "mistral/mistral-embed: \"API key for provider 'mistral' not found in secrets.\""
+  ],
+  "api_key_status": {
+    "openai": true,
+    "anthropic": true,
+    "google": true,
+    "xai": false,
+    "mistral": false
+  }
+}

@@ -72,15 +72,24 @@ class LLMInventory:
         if not model_config:
             raise KeyError(f"Model not found: {provider}/{model}")
 
-        for field in model_config.get('required_fields', []):
-            if field not in payload:
-                raise ValueError(f"Missing required field in payload: '{field}'")
+        # Check required fields, but allow adapters to handle conversions
+        required_fields = model_config.get('required_fields', [])
+        capabilities = model_config.get('capabilities', [])
+        
+        # Special handling for image generation models
+        if 'image_generation' in capabilities and provider == 'openai':
+            # For DALL-E, accept either 'prompt' or 'messages' format
+            if 'prompt' not in payload and 'messages' not in payload:
+                raise ValueError("DALL-E models require either 'prompt' field or 'messages' field")
+        else:
+            # Standard required field validation
+            for field in required_fields:
+                if field not in payload:
+                    raise ValueError(f"Missing required field in payload: '{field}'")
 
         final_params = self.model_config_manager.merge_and_validate_params(
             provider, model, parameters
         )
-
-        full_payload = {**payload, **final_params}
 
         api_key = self.secret_manager.get_secret(provider)
         if not api_key:
@@ -89,5 +98,5 @@ class LLMInventory:
         adapter_class = get_adapter(provider)
         adapter = adapter_class(api_key=api_key)
 
-        response = adapter.invoke(model_config, full_payload)
+        response = adapter.invoke(model_config, payload, final_params)
         return response
