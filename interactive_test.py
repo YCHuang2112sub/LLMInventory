@@ -8,6 +8,12 @@ import time
 from pathlib import Path
 from src.llminventory import LLMInventory
 
+try:
+    import pytest
+    pytestmark = pytest.mark.skip(reason="interactive test requires manual execution")
+except Exception:  # pragma: no cover
+    pass
+
 
 def get_available_models(inventory):
     """Get list of available models grouped by provider."""

@@ -1,5 +1,6 @@
 """Manages loading, validating, and providing access to LLM model configurations."""
 
+import sys
 import yaml
 from pathlib import Path
 from typing import Dict, Any, Optional, List
@@ -81,9 +82,9 @@ class ModelConfigManager:
                     return
                         
             except yaml.YAMLError as e:
-                print(f"Warning: Could not parse supported_models.yaml: {e}")
+                print(f"Warning: Could not parse supported_models.yaml: {e}", file=sys.stderr)
             except Exception as e:
-                print(f"Warning: Error loading supported_models.yaml: {e}")
+                print(f"Warning: Error loading supported_models.yaml: {e}", file=sys.stderr)
         
         # Fallback: Load individual config files from configs directory
         print("Falling back to loading individual config files...")
@@ -112,11 +113,11 @@ class ModelConfigManager:
                     key = f"{provider}/{model_name}"
                     self._model_configs[key] = config
             except yaml.YAMLError as e:
-                print(f"Warning: Could not parse YAML file {config_file.name}: {e}")
+                print(f"Warning: Could not parse YAML file {config_file.name}: {e}", file=sys.stderr)
             except ValueError as e:
-                print(f"Warning: Invalid config file {config_file.name}: {e}")
+                print(f"Warning: Invalid config file {config_file.name}: {e}", file=sys.stderr)
             except Exception as e:
-                print(f"Warning: An unexpected error occurred loading {config_file.name}: {e}")
+                print(f"Warning: An unexpected error occurred loading {config_file.name}: {e}", file=sys.stderr)
 
     def _get_endpoint_for_provider(self, provider: str) -> str:
         """Get the API endpoint URL for a given provider."""

@@ -1,0 +1,53 @@
+name: Manual API Updates Check
+
+on:
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.9'
+
+jobs:
+  manual-api-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create secrets file
+        run: |
+          cat > secrets.yaml <<'EOF'
+          openai:
+            api_key: "${{ secrets.OPENAI_API_KEY }}"
+          anthropic:
+            api_key: "${{ secrets.ANTHROPIC_API_KEY }}"
+          google:
+            api_key: "${{ secrets.GOOGLE_API_KEY }}"
+          xai:
+            api_key: "${{ secrets.XAI_API_KEY }}"
+          mistral:
+            api_key: "${{ secrets.MISTRAL_API_KEY }}"
+          EOF
+
+      - name: Run manual API updates check
+        run: |
+          python scripts/manual_api_check.py > manual_api_check.log 2>&1
+
+      - name: Upload check results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-api-check-${{ github.run_number }}
+          path: |
+            manual_api_check.log
+            api_updates_found.json
+          retention-days: 30

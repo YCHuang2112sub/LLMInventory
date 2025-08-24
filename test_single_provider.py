@@ -9,6 +9,12 @@ import time
 from pathlib import Path
 from src.llminventory import LLMInventory
 
+try:
+    import pytest
+    pytestmark = pytest.mark.skip(reason="single provider test requires manual execution")
+except Exception:  # pragma: no cover
+    pass
+
 
 def test_provider(provider_name: str, model_name: str = None):
     """Test a specific provider and optionally a specific model."""

@@ -229,6 +229,17 @@ python test_single_provider.py
 # Run unit tests
 python -m pytest tests/
 ```
+## 🔎 Manual Provider Update Verification
+
+Maintainers can manually trigger a provider update scan using the **Manual API Updates Check** workflow.
+
+1. Navigate to the **Actions** tab in GitHub.
+2. Select **Manual API Updates Check** from the left sidebar.
+3. Click **Run workflow** to start the check.
+
+The workflow runs `scripts/manual_api_check.py` which also checks provider RSS feeds for recent announcements.
+Results are uploaded as an artifact (`manual_api_check.log`) along with any detected changes in `api_updates_found.json`.
+
 
 ## 📝 Configuration
 
