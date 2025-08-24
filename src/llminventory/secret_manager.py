@@ -27,13 +27,18 @@ class SecretManager:
 
         Raises:
             FileNotFoundError: If the secrets file does not exist.
-            yaml.YAMLError: If the file is not valid YAML.
+            yaml.YAMLError: If the file is not valid YAML or has an unexpected structure.
         """
         if not secrets_file.is_file():
             raise FileNotFoundError(f"Secrets file not found at: {secrets_file}")
 
         with open(secrets_file, 'r', encoding='utf-8') as f:
-            self._secrets = yaml.safe_load(f)
+            data = yaml.safe_load(f)
+
+        if not isinstance(data, dict) or any(not isinstance(v, dict) for v in data.values()):
+            raise yaml.YAMLError("Invalid secrets file structure")
+
+        self._secrets = data
 
     def get_secret(self, provider_name: str) -> Optional[str]:
         """
